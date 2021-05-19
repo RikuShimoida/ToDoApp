@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Sample</title>
+</head>
+<body>
+ 
+ 	<h2 th:text="${user.name}">さん、ようこそ</h2>
+ 	
+ 	<table>
+ 		<tr>
+ 			<th>ID</th>
+ 			<th>やること</th>
+ 			<th>締切日</th>
+ 			<th>編集</th>
+ 			<th>完了</th>
+ 		</tr>
+ 		<tr th:each="task : ${tasks}>
+	 		<td th:text="${task.id}">
+	 		<td th:text="${task.name}">
+	 		<td th:text="${task.deadline}">
+	 		<td><a th:href="/ + '${task.id}' + /edit"><button type="button">編集</button></a></td>
+	 		<td><a th:href="/ + '${task.id}' + /delete"><button type="button">完了</button></a></td>
+	 	</tr>	
+ 	</table>
+ 	
+</body>
+</html>
