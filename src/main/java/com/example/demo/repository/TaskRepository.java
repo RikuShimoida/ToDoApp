@@ -8,6 +8,6 @@ import com.example.demo.entity.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
 	
-	List<Task> findAllById(Integer id);
+	List<Task> findByUserIdAndIsDeletedOrderByIdAsc(Integer userId, Boolean isDeleted);
 
 }

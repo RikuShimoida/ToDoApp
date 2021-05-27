@@ -2,19 +2,18 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>HTML Sample</title>
+  <title>ユーザー新規登録</title>
 </head>
 <body>
  
- 	<h1>ToDoリストへようこそ</h1>
+ 	<h1>ユーザー新規登録</h1>
  	
- 	<form action="/login" method="post">
+ 	<form action="/createUser" method="post">
+ 	<input type="text" name="name" placeholder="お名前を入力してください">
  	<input type="text" name="email" placeholder="メールアドレスを入力してください">
  	<input type="text" name="password" placeholder="パスワードを入力してください">
- 	<input type="submit" value="ログイン">
+ 	<input type="submit" value="登録">
  	</form>
- 	
- 	<a href="/createUser">新規登録へ</a>
  	
 </body>
 </html>

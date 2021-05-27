@@ -2,28 +2,48 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>HTML Sample</title>
+  <link rel="stylesheet" th:href="@{/css/todo.css}">
+  <script src="/todo_app/src/main/resources/static/javascript/getTime.js"></script>
+  <title>ユーザーページ</title>
 </head>
 <body>
  
- 	<h2 th:text="${user.name}">さん、ようこそ</h2>
+ 	<h2 th:text="${user.name} + 'さん、ようこそ'"></h2>
  	
- 	<table>
+ 	<a href="/gotoCreateTask"><button type="button">タスクの登録</button></a>
+ 	
+ 	<table id = "todo_table" border="1">
  		<tr>
  			<th>ID</th>
  			<th>やること</th>
  			<th>締切日</th>
+ 			<th>残り時間</th>
  			<th>編集</th>
  			<th>完了</th>
  		</tr>
- 		<tr th:each="task : ${tasks}>
+ 		<tr th:each="task : ${tasks}">
 	 		<td th:text="${task.id}">
 	 		<td th:text="${task.name}">
-	 		<td th:text="${task.deadline}">
-	 		<td><a th:href="/ + '${task.id}' + /edit"><button type="button">編集</button></a></td>
-	 		<td><a th:href="/ + '${task.id}' + /delete"><button type="button">完了</button></a></td>
+	 		<td><div　id="deadline" th:value="${task.deadline}" th:text="${#dates.format(task.deadline, 'yyyy/MM/dd')}"></div></td>
+	 		<td><div id="getTime"></td>
+	 		<script th:inline="javascript">
+	 		function timer(){
+	 		 var nowTime = new Date();
+	 		 var deadline = [[${#dates.format(task.deadline, 'yyyy/MM/dd')}]];
+	 		 var deadTime = new Date(deadline);
+	 		 var result = deadTime - nowTime;
+	 		 console.log(result);
+	 		 document.getElementById("getTime").innerHTML = result;
+	 		 }
+	 		 setInterval('timer()',0);
+	 		</script>
+	 		<td><a th:href="'/task/' + ${task.id} + '/edit'"><button type="button">編集</button></a></td>
+	 		<td><a th:href="'/task/' + ${task.id} + '/garbage'"><button type="button">完了</button></a></td>
 	 	</tr>	
  	</table>
  	
+ 	<p th:text="${message}"></p>
+ 
+ <a href="/gotoGarbageBox"><button type="button">ゴミ箱の中を見る</button></a>
 </body>
 </html>
