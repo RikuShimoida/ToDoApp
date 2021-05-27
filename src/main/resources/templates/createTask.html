@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="todo.css">
+  <title>タスクの新規登録</title>
+</head>
+<body>
+ 
+ 	
+ 	<h2>タスクの新規登録</h2>
+ 		
+ 	<form action="/gotoCreateTask/createTask" method="post">
+	 	
+	 	<p><textarea rows "2" cols = "10" name="taskname">タスクの入力をしてください</textarea></p>
+	 	
+	 	締切日
+	 	<input type="date" th:value="${today}" name="deadline"
+	       th:min="${today}" max="2070-12-31">
+	       
+	    <p><input type="submit" value="登録する"></p>
+	       
+     
+ 	</form>
+ 	
+ 	
+ 	
+</body>
+</html>

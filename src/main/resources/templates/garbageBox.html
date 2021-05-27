@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/css/todo.css}">
+  <script src="/todo_app/src/main/resources/static/javascript/getTime.js"></script>
+  <title>ゴミ箱</title>
+</head>
+<body>
+ 
+ 	<h2 th:text="${user.name} + 'さん、ようこそ'"></h2>
+ 	
+ 	<table id = "todo_table" border="1">
+ 		<tr>
+ 			<th>ID</th>
+ 			<th>やること</th>
+ 			<th>締切日</th>
+ 			<th>削除</th>
+ 		</tr>
+ 		<tr th:each="task : ${tasks}">
+	 		<td th:text="${task.id}">
+	 		<td th:text="${task.name}">
+	 		<td><div　id="deadline" th:value="${task.deadline}" th:text="${#dates.format(task.deadline, 'yyyy/MM/dd')}"></div></td>
+	 		<td><a th:href="'/task/' + ${task.id} + '/delete'"><button type="button">ゴミ箱から削除する</button></a></td>
+	 	</tr>	
+ 	</table>
+ 	
+ 	<p th:text="${message}"></p>
+ 
+ <form action="/login" method="post">
+ <input type="hidden" name="email" th:value="${user.email}">
+ <input type="hidden" name="password" th:value="${user.password}">
+ <input type="submit" value="タスク一覧に戻る">
+ </form>
+
+
+
+<form id="csvform" method="post" th:action="@{/asset/csv}" th:object="${csvForm}">
+          <div th:each="task:${tasks}">
+            <input type="hidden" name="id" th:value="${task.id}" />
+            <input type="hidden" name="name" th:value="${task.name}" />
+            <input type="hidden" name="deadline" th:value="${task.deadline}" />
+          </div>
+          <button type="submit">CSVダウンロード</button>
+        </form>
+
+</body>
+</html>

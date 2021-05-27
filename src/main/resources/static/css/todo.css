@@ -1,0 +1,14 @@
+body{
+	background-color:#cccccc;
+}
+
+textarea {
+  resize: none;
+  width:300px;
+  height:30px;
+}
+
+#todo_table{
+	text-align: center;
+	
+}
