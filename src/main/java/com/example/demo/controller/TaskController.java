@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import java.awt.PageAttributes.MediaType;
+
+import org.springframework.util.MimeTypeUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,13 +19,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.util.MimeType;
+import org.springframework.http.MediaType;
 
+import com.example.demo.entity.CSV;
+import com.example.demo.entity.CsvColumn;
 import com.example.demo.entity.Task;
 import com.example.demo.entity.User;
 import com.example.demo.usecase.TaskUseCase;
 import com.example.demo.usecase.UserUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sun.tools.jdeprscan.CSV;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+
 
 @Controller
 public class TaskController {
@@ -100,8 +107,6 @@ public class TaskController {
 		
 		taskUseCase.doneTask(taskUseCase.getTask(id));
 		
-		Task task = taskUseCase.getTask(id);
-		
 		User user = (User)session.getAttribute("user");
 		mv.addObject("message", "タスクが一つ完了しました！");
 		
@@ -148,13 +153,13 @@ public class TaskController {
 		return mv;
 	}
 	
-	 @PostMapping(value = "/csv", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+	 @PostMapping(value = "asset/csv", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
 		      + "; charset=UTF-8; Content-Disposition: attachment")
 		  @ResponseBody
 		  public Object csvDownload(@ModelAttribute("csvForm") CSV records) throws JsonProcessingException {
 		    List<CsvColumn> csvList = new ArrayList<>();
-		    for (int i = 0; i < records.getId().size(); i++) { // レコードの数ぶんだけループ回して
-		      csvList.add(new CsvColumn(records.getId().get(i), records.getCategoryId().get(i), records.getAdminName().get(i), records.getAssetName().get(i), records.getRemarks().get(i)));
+		    for (int i = 0; i < records.getId().size(); i++) { 
+		      csvList.add(new CsvColumn(records.getId().get(i), records.getName().get(i), records.getDeadline().get(i)));
 		    }
 		    CsvMapper mapper = new CsvMapper();
 		    CsvSchema schema = mapper.schemaFor(CsvColumn.class).withHeader();
