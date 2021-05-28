@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public class CSV {
 	
 	  List<Integer> id;

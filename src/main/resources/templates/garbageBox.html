@@ -15,12 +15,14 @@
  			<th>ID</th>
  			<th>やること</th>
  			<th>締切日</th>
+ 			<th>復元</th>
  			<th>削除</th>
  		</tr>
  		<tr th:each="task : ${tasks}">
 	 		<td th:text="${task.id}">
 	 		<td th:text="${task.name}">
 	 		<td><div　id="deadline" th:value="${task.deadline}" th:text="${#dates.format(task.deadline, 'yyyy/MM/dd')}"></div></td>
+	 		<td><a th:href="'/task/' + ${task.id} + '/restore'"><button type="button">ゴミ箱から復元する</button></a></td>
 	 		<td><a th:href="'/task/' + ${task.id} + '/delete'"><button type="button">ゴミ箱から削除する</button></a></td>
 	 	</tr>	
  	</table>

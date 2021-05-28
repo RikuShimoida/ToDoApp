@@ -32,7 +32,7 @@
 	 		<script th:inline="javascript">
 	 		function timer(){
 	 		 var nowTime = new Date();
-	 		 var deadline = [[${#dates.format(task.deadline, 'yyyy/MM/dd')}]];
+	 		 var deadline =/*[[${#dates.format(task.deadline, 'yyyy/MM/dd')}]]*/;
 	 		 var deadTime = new Date(deadline);
 	 		 var result = deadTime - nowTime;
 	 		 console.log(result);

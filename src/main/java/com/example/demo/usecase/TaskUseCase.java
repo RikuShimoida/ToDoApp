@@ -19,5 +19,7 @@ public interface TaskUseCase {
 	Task getTask(Integer taskId);
 	
 	List<Task> showGarbageTasks(Integer userId);
+	
+	void restore(Task task);
 
 }

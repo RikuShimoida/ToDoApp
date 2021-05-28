@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.util.MimeType;
 import org.springframework.http.MediaType;
 
 import com.example.demo.entity.CSV;
@@ -132,6 +131,23 @@ public class TaskController {
 		mv.addObject("tasks", tasks);
 		
 		mv.setViewName("garbageBox");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/task/{id}/restore")
+	public ModelAndView restoreTask(@PathVariable("id") Integer id, ModelAndView mv) {
+		
+		taskUseCase.restore(taskUseCase.getTask(id));
+		
+		User user = (User)session.getAttribute("user");
+		mv.addObject("message", "タスクを復元しました。");
+		
+		List<Task> tasks = taskUseCase.showAllTask(user.getId());
+		mv.addObject("user", user);
+		mv.addObject("tasks", tasks);
+		
+		mv.setViewName("user");
 		
 		return mv;
 	}

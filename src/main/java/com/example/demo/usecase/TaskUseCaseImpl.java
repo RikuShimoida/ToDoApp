@@ -61,4 +61,15 @@ public class TaskUseCaseImpl implements TaskUseCase {
 		}
 		
 	}
+	
+	@Override
+	public void restore(Task task) {
+		
+		Optional<Task> willRestoreTask = taskRepository.findById(task.getId());
+		
+		if(willRestoreTask.isPresent()) {
+			Task restoreTask = willRestoreTask.get();
+			taskRepository.saveAndFlush(new Task(restoreTask.getId(), restoreTask.getName(), restoreTask.getUserId(), restoreTask.getDeadline(), false));
+			}
+	}
 }
